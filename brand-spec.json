@@ -1,0 +1,164 @@
+{
+  "brand": "HeyMax",
+  "artifact": "Logo Picker — placement spec",
+  "version": "1.0",
+  "updated": "2026-07-07",
+  "typeface": "Plus Jakarta Sans",
+  "drive_folder": "https://drive.google.com/drive/folders/1bTzH-rSwBXhQkRZV049NIn3o9oceB5ji",
+  "rules": {
+    "transition": "Wordmark everywhere for now. The favicon is the only monogram in active use.",
+    "background": "Use the Light asset on light backgrounds and the Dark asset on dark backgrounds. Dark brand surfaces use #21005E (headers, footers, in-app bar, email, merch, slide decks). The splash screen uses Secondary #F3EAFF.",
+    "gradients": "Never use a gradient that is not brand-provided. Only two gradients are approved: (1) the main-logo swoosh gradient built into the gradient wordmark, and (2) the social-avatar tile gradient #ECEBFB to #F6E9F4.",
+    "framing": "Long banners must give the logo generous padding — never frame the wordmark close to the edges.",
+    "distortion": "Never stretch, rotate, recolour, fade, or add effects to the logo. Use it at full strength."
+  },
+  "colors": {
+    "primary_deep": "#21005E",
+    "primary_violet": "#4000B8",
+    "secondary": "#F3EAFF",
+    "dark": "#1A1A1A",
+    "white": "#FFFFFF",
+    "monogram_navy": "#130739",
+    "app_icon_purple_bg": "#3C3682",
+    "app_icon_purple_wordmark": "#F3EAFF",
+    "app_icon_light_bg": "#F6F6FC",
+    "app_icon_light_wordmark": "#21005E",
+    "social_avatar_gradient": ["#ECEBFB", "#F6E9F4"]
+  },
+  "colors_rgb_cmyk": {
+    "#21005E": {"rgb": [33, 0, 94], "cmyk": [65, 100, 0, 63]},
+    "#4000B8": {"rgb": [64, 0, 184], "cmyk": [65, 100, 0, 28]},
+    "#F3EAFF": {"rgb": [243, 234, 255], "cmyk": [5, 8, 0, 0]},
+    "#1A1A1A": {"rgb": [26, 26, 26], "cmyk": [0, 0, 0, 90]},
+    "#FFFFFF": {"rgb": [255, 255, 255], "cmyk": [0, 0, 0, 0]}
+  },
+  "placements": [
+    {
+      "name": "Favicon",
+      "category": "App & Icons",
+      "note": "The only monogram in use — the Bracket M mark.",
+      "assets": [
+        {"role": "Light bg", "file": "Bracket M — Navy, Flat.svg", "background": "#FFFFFF", "logo_color": "#130739"},
+        {"role": "Dark bg", "file": "Bracket M — White, Flat.svg", "background": "#21005E", "logo_color": "#FFFFFF"}
+      ]
+    },
+    {
+      "name": "App icon — square",
+      "category": "App & Icons",
+      "note": "Self-contained tile — pick Primary or Light.",
+      "assets": [
+        {"role": "Primary", "file": "App Icon.svg", "background": "#3C3682", "logo_color": "#F3EAFF"},
+        {"role": "Light", "file": "App Icon-3.svg", "background": "#F6F6FC", "logo_color": "#21005E"}
+      ]
+    },
+    {
+      "name": "App icon — rounded",
+      "category": "App & Icons",
+      "note": "Squircle (iOS style) — Primary or Light.",
+      "assets": [
+        {"role": "Primary", "file": "App Icon-2.svg", "background": "#3C3682", "logo_color": "#F3EAFF"},
+        {"role": "Light", "file": "App Icon-5.svg", "background": "#F6F6FC", "logo_color": "#21005E"}
+      ]
+    },
+    {
+      "name": "App icon — round",
+      "category": "App & Icons",
+      "note": "Circular — Primary or Light.",
+      "assets": [
+        {"role": "Primary", "file": "App Icon-1.svg", "background": "#3C3682", "logo_color": "#F3EAFF"},
+        {"role": "Light", "file": "App Icon-4.svg", "background": "#F6F6FC", "logo_color": "#21005E"}
+      ]
+    },
+    {
+      "name": "Push notification icon",
+      "category": "App & Icons",
+      "note": "Square tile — Primary or Light.",
+      "assets": [
+        {"role": "Primary", "file": "App Icon.svg", "background": "#3C3682", "logo_color": "#F3EAFF"},
+        {"role": "Light", "file": "App Icon-3.svg", "background": "#F6F6FC", "logo_color": "#21005E"}
+      ]
+    },
+    {
+      "name": "Monogram",
+      "category": "App & Icons",
+      "note": "Enclosed mark — four finishes. Outline Brand (#21005E) for light, Outline White for dark.",
+      "assets": [
+        {"role": "Gradient", "file": "Monogram — Gradient.svg", "background": "any", "logo_color": "navy pill + gradient glow"},
+        {"role": "Filled Brand", "file": "Monogram Filled — Navy.svg", "background": "any", "logo_color": "#130739 pill, #F5F5F5 mark"},
+        {"role": "Outline Brand", "file": "Monogram Outline — Navy.svg", "background": "light", "logo_color": "#21005E"},
+        {"role": "Outline White", "file": "Monogram Outline — White.svg", "background": "dark", "logo_color": "#F4F4F4"}
+      ]
+    },
+    {
+      "name": "Splash screen",
+      "category": "Product",
+      "note": "Main logo on Secondary #F3EAFF — no gradient-pill backgrounds.",
+      "assets": [
+        {"role": "Splash", "file": "Splash.svg (main gradient wordmark)", "background": "#F3EAFF", "logo_color": "navy wordmark with swoosh gradient"}
+      ]
+    },
+    {
+      "name": "Header, footer & in-app bar",
+      "category": "Product",
+      "note": "Website header, website footer and the in-app top bar all share this wordmark.",
+      "assets": [
+        {"role": "Light bg", "file": "Wordmark_purple.png", "background": "#FFFFFF", "logo_color": "#21005E"},
+        {"role": "Dark bg", "file": "Wordmark_white.png", "background": "#21005E", "logo_color": "#FFFFFF"}
+      ]
+    },
+    {
+      "name": "Email header",
+      "category": "Product",
+      "note": "Wordmark, matched to theme.",
+      "assets": [
+        {"role": "Light bg", "file": "Wordmark_black.png", "background": "#FFFFFF", "logo_color": "#1A1A1A"},
+        {"role": "Dark bg", "file": "Wordmark_white.png", "background": "#21005E", "logo_color": "#FFFFFF"}
+      ]
+    },
+    {
+      "name": "Social avatar",
+      "category": "Social",
+      "note": "Lilac-to-pink gradient tile with brand-purple wordmark — round or square.",
+      "assets": [
+        {"role": "Round", "file": "Social_Media_Round.png", "background": "gradient #ECEBFB→#F6E9F4", "logo_color": "#21005E"},
+        {"role": "Square", "file": "Social_Media_Square.png", "background": "gradient #ECEBFB→#F6E9F4", "logo_color": "#21005E"}
+      ]
+    },
+    {
+      "name": "Social share / Open Graph",
+      "category": "Social",
+      "note": "Same image for light & dark. Generous padding around the logo.",
+      "assets": [
+        {"role": "Light & dark", "file": "Open_graph.png", "background": "#21005E", "logo_color": "#FFFFFF"}
+      ]
+    },
+    {
+      "name": "Social banner",
+      "category": "Social",
+      "note": "Three options — pick by campaign. Solid brand colours only, generous padding.",
+      "assets": [
+        {"role": "Option 1", "file": "Social_banner_opt1.png", "background": "#21005E", "logo_color": "#FFFFFF"},
+        {"role": "Option 2", "file": "Social_banner_opt2.png", "background": "#4000B8", "logo_color": "#FFFFFF"},
+        {"role": "Option 3", "file": "Social_banner_opt3.png", "background": "#F3EAFF", "logo_color": "#21005E"}
+      ]
+    },
+    {
+      "name": "Merch / physical",
+      "category": "Merch",
+      "note": "Wordmark, matched to material.",
+      "assets": [
+        {"role": "Light bg", "file": "Wordmark_black.png", "background": "#FFFFFF", "logo_color": "#1A1A1A"},
+        {"role": "Dark bg", "file": "Wordmark_white.png", "background": "#21005E", "logo_color": "#FFFFFF"}
+      ]
+    },
+    {
+      "name": "Slide decks",
+      "category": "Internal",
+      "note": "Brand-purple wordmark on light; white on brand purple.",
+      "assets": [
+        {"role": "Light bg", "file": "Wordmark_purple.png", "background": "#FFFFFF", "logo_color": "#21005E"},
+        {"role": "Dark bg", "file": "Wordmark_white.png", "background": "#21005E", "logo_color": "#FFFFFF"}
+      ]
+    }
+  ]
+}

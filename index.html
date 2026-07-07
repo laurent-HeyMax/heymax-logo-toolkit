@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HeyMax — Logo Picker</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --primary-deep:#21005E;
+    --primary-violet:#4000B8;
+    --secondary:#F3EAFF;
+    --dark:#1A1A1A;
+    --navy:#130739;
+    --page:#F4F2EC;
+    --card:#FFFFFF;
+    --line:#E7E4DD;
+    --ink:#1A1A1A;
+    --muted:#6B6B6B;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    font-family:'Plus Jakarta Sans',sans-serif;
+    background:var(--page);
+    color:var(--ink);
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1180px;margin:0 auto;padding:44px 32px 90px}
+
+  header .kick{font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--primary-violet)}
+  header h1{font-size:34px;font-weight:800;letter-spacing:-.02em;margin:6px 0 10px}
+  header p.lede{font-size:15px;color:var(--muted);max-width:640px;line-height:1.55}
+
+  .rule{
+    display:flex;gap:12px;align-items:flex-start;
+    background:var(--secondary);
+    border:1px solid #E3D8FA;
+    border-radius:14px;
+    padding:14px 18px;
+    margin:22px 0 6px;
+    font-size:13.5px;line-height:1.5;color:#3A2A6B;
+  }
+  .rule b{color:var(--primary-deep)}
+  .rule .dot{flex:none;width:8px;height:8px;border-radius:50%;background:var(--primary-violet);margin-top:6px}
+
+  /* controls */
+  .controls{position:sticky;top:0;z-index:10;background:var(--page);padding:18px 0 14px;margin-top:14px;border-bottom:1px solid var(--line)}
+  .chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}
+  .chip{
+    font-family:inherit;font-size:13px;font-weight:600;
+    border:1px solid var(--line);background:#fff;color:var(--ink);
+    padding:7px 14px;border-radius:999px;cursor:pointer;transition:.15s;
+  }
+  .chip:hover{border-color:#C9C3B8}
+  .chip.active{background:var(--primary-deep);border-color:var(--primary-deep);color:#fff}
+  .searchrow{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+  .search{
+    flex:1;min-width:220px;font-family:inherit;font-size:14px;
+    border:1px solid var(--line);border-radius:10px;padding:10px 14px;background:#fff;
+  }
+  .search:focus{outline:none;border-color:var(--primary-violet)}
+  .count{font-size:13px;color:var(--muted)}
+  .folder-btn{
+    font-size:13px;font-weight:700;text-decoration:none;color:#fff;background:var(--primary-violet);
+    padding:9px 16px;border-radius:10px;white-space:nowrap;
+  }
+
+  /* grid */
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:18px;margin-top:22px}
+  .item{background:var(--card);border:1px solid var(--line);border-radius:18px;overflow:hidden;display:flex;flex-direction:column}
+  .item .top{padding:16px 18px 10px}
+  .item .cat{display:inline-block;font-size:10.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--primary-violet);background:var(--secondary);padding:3px 9px;border-radius:6px}
+  .item h3{font-size:16px;font-weight:700;margin:9px 0 4px}
+  .item .note{font-size:12.5px;color:var(--muted);line-height:1.45;min-height:18px}
+
+  .previews{display:flex;flex-wrap:wrap;gap:10px;padding:6px 14px 16px}
+  .pv{flex:1 1 128px;min-width:128px;display:flex;flex-direction:column}
+  .pvgrid{display:grid;gap:10px;width:100%}
+  .pvgrid .pv{min-width:0}
+  .pv .bg{
+    height:104px;border-radius:12px;display:flex;align-items:center;justify-content:center;
+    overflow:hidden;border:1px solid rgba(0,0,0,.05);padding:16px;position:relative;
+  }
+  .pv .lbl{font-size:10px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);margin:8px 2px 2px}
+  .pv .fname{font-size:11.5px;color:var(--ink);word-break:break-word;line-height:1.35;font-weight:500}
+  .pv a.dl{font-size:11px;font-weight:700;color:var(--primary-violet);text-decoration:none;margin-top:4px;display:inline-block}
+  .pv.single{flex:1}
+  .selfnote{font-size:11px;color:var(--muted);font-style:italic;margin-top:6px}
+
+  /* preview art */
+  .wordmark{width:78%;height:auto;display:block}
+  .tile{width:64px;height:64px;display:flex;align-items:center;justify-content:center}
+  .tile.round{border-radius:50%}
+  .tile.square{border-radius:14px}
+  .tile.squircle{border-radius:20px}
+  .tile .wm{width:74%}
+  .apptile{width:78px;height:78px;display:block}
+  .monomark{height:66px;width:auto;display:block}
+  .monopill{height:82px;width:auto;display:block}
+  .banner{width:100%;height:100%;border-radius:10px;display:flex;align-items:center;justify-content:center;padding:22px}
+  .banner .wm{width:34%}
+  .banner.og .wm{width:30%}
+
+  footer{margin-top:46px;padding-top:18px;border-top:1px solid var(--line);font-size:12px;color:var(--muted);line-height:1.6}
+  .empty{padding:50px;text-align:center;color:var(--muted);font-size:14px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="kick">HeyMax Brand Toolkit</div>
+    <h1>Logo Picker</h1>
+    <p class="lede">Find the right logo for any placement. Pick your placement, match the asset to your background, and download the original file from the shared folder. Previews are indicative — always ship the actual file.</p>
+  </header>
+
+  <div class="rule">
+    <span class="dot"></span>
+    <div><b>Transition rule:</b> wordmark everywhere for now — the favicon is the only monogram in use. <b>Light</b> = asset for light backgrounds · <b>Dark</b> = asset for dark backgrounds.</div>
+  </div>
+
+  <div class="controls">
+    <div class="chips" id="chips"></div>
+    <div class="searchrow">
+      <input class="search" id="search" placeholder="Search placements…  (e.g. website, email, partner, social)">
+      <span class="count" id="count"></span>
+      <a class="folder-btn" id="folderBtn" target="_blank" rel="noopener">Open Drive folder ↗</a>
+    </div>
+  </div>
+
+  <div class="grid" id="grid"></div>
+  <div class="empty" id="empty" style="display:none">No placements match that search.</div>
+
+  <footer id="foot"></footer>
+</div>
+
+<script>
+/* ------------------------------------------------------------------
+   EDIT HERE — everything is data-driven.
+   • DRIVE_FOLDER : the shared "Logo Placements" folder link
+   • PLACEMENTS   : one row per placement. To add/change a row, edit
+                    this array. `light` / `dark` reference an asset
+                    filename (rendered as a preview) or a token:
+                      "SELF"     → self-contained tile (works on any bg)
+                      "GRADIENT" → brand gradient background
+   ------------------------------------------------------------------ */
+const DRIVE_FOLDER = "https://drive.google.com/drive/folders/1bTzH-rSwBXhQkRZV049NIn3o9oceB5ji";
+
+const WM_PATH = "M155.669 74.3389L176.098 23.582H183.62L155.777 91.5049C154.73 93.9747 153.344 96.4817 151.623 99.0264C150.009 101.412 147.968 103.404 145.499 105L144.501 105.627C141.971 107.14 138.881 107.896 135.232 107.896C134.185 107.896 133.024 107.784 131.752 107.56C130.554 107.41 129.394 107.148 128.271 106.773V100.486C129.17 100.711 130.18 100.898 131.303 101.048C132.5 101.198 133.586 101.272 134.559 101.272C138.226 101.198 141.107 100.299 143.203 98.5781C145.299 96.8567 147.207 94.0118 148.929 90.0449L151.893 83.1035L127.935 23.582H135.345L155.669 74.3389ZM301.766 21.6768C306.78 21.6768 311.197 22.6122 315.014 24.4834C318.831 26.2797 321.787 28.8241 323.883 32.1172C326.053 35.3356 327.139 39.116 327.139 43.457V84.0977H313.217V77.6904C312.441 78.545 311.619 79.335 310.747 80.0566C308.577 81.7779 306.107 83.1247 303.338 84.0977C300.569 84.9958 297.5 85.4453 294.132 85.4453C289.866 85.4453 286.16 84.7336 283.017 83.3115C279.873 81.8895 277.441 79.8685 275.72 77.249C273.998 74.5547 273.137 71.4491 273.137 67.9316C273.137 64.5636 273.886 61.5688 275.383 58.9492C276.88 56.2551 279.2 54.01 282.343 52.2139C285.486 50.4176 289.454 49.1449 294.244 48.3965L312.432 45.4326V43.457C312.432 40.8376 311.384 38.6667 309.288 36.9453C307.267 35.149 304.572 34.251 301.204 34.251C298.061 34.251 295.254 35.1116 292.784 36.833C290.389 38.4796 288.63 40.6878 287.508 43.457L275.495 37.6182C276.693 34.4 278.564 31.6307 281.108 29.3105C283.728 26.9155 286.797 25.0445 290.314 23.6973C293.832 22.3501 297.649 21.6768 301.766 21.6768ZM99.3916 22.2344C103.508 22.2344 107.213 22.9827 110.506 24.4795C113.874 25.9764 116.755 28.0723 119.15 30.7666C121.62 33.3861 123.491 36.4176 124.764 39.8604C126.111 43.2284 126.785 46.7841 126.785 50.5264C126.785 51.2748 126.748 52.0606 126.673 52.8838C126.598 53.707 126.486 54.5678 126.336 55.4658H77.6191C77.7665 59.4653 78.6976 63.0583 80.418 66.2441C82.4388 69.9863 85.2079 72.9428 88.7256 75.1133C92.2433 77.2089 96.1352 78.2568 100.401 78.2568C104.742 78.2568 108.523 77.2464 111.741 75.2256C114.959 73.13 117.579 70.3607 119.6 66.918L125.325 69.9492C123.978 72.7183 122.069 75.2254 119.6 77.4707C117.13 79.6412 114.248 81.3624 110.955 82.6348C107.737 83.9071 104.219 84.5439 100.401 84.5439C94.788 84.5439 89.7358 83.1964 85.2451 80.502C80.7545 77.7327 77.1996 73.9905 74.5801 69.2754C71.9605 64.4853 70.6504 59.1335 70.6504 53.2207C70.6504 47.3079 71.923 42.0311 74.4678 37.3906C77.0125 32.6756 80.4551 28.9708 84.7959 26.2764C89.137 23.5819 94.0027 22.2344 99.3916 22.2344ZM265.466 84.0303H252.021V41.5547C245.738 47.2971 237.732 50.9326 229.053 50.9326C220.329 50.9326 212.285 47.2617 205.988 41.4688V84.1846H192.544V0.155273H205.988V11.7393H206.084C206.084 23.9947 216.247 36.9307 229.053 36.9307C241.659 36.9305 251.703 24.3959 252.014 12.3145L252.021 11.7393V0H265.466V84.0303ZM7.29785 38.5488H54.4502V0.489258H61.748V84.1299H54.4502V45.2842H7.29785V84.1299H0V0.489258H7.29785V38.5488ZM364.205 41.9512L377.061 22.9717H394.237L372.906 53.3965L394.125 84.0459H376.948L364.205 65.0615L351.463 84.0459H334.174L355.505 53.3965L334.062 22.9717H351.351L364.205 41.9512ZM297.051 59.2861C294.132 59.81 291.961 60.7457 290.539 62.0928C289.117 63.44 288.405 65.1996 288.405 67.3701C288.405 69.4657 289.192 71.1496 290.764 72.4219C292.41 73.6193 294.431 74.2178 296.826 74.2178C299.895 74.2177 302.589 73.5819 304.909 72.3096C307.304 70.9624 309.138 69.1287 310.41 66.8086C311.757 64.4884 312.432 61.9431 312.432 59.1738V56.6719L297.051 59.2861ZM99.3916 28.5215C95.3499 28.5215 91.6444 29.6068 88.2764 31.7773C84.9084 33.873 82.2516 36.792 80.3057 40.5342C78.9184 43.1487 78.0664 46.0679 77.7441 49.291H119.624C119.664 45.8864 118.983 42.7801 117.579 39.9727C115.858 36.455 113.387 33.6858 110.169 31.665C107.026 29.5695 103.433 28.5216 99.3916 28.5215Z";
+
+function wordmark(color, cls){
+  return `<svg class="${cls||'wordmark'}" viewBox="0 0 395 108" xmlns="http://www.w3.org/2000/svg"><path d="${WM_PATH}" fill="${color}"/></svg>`;
+}
+
+/* Real app-icon tile — exact artwork from the App Icon.svg files (200x200) */
+const APP_WM_PATH = "M87.0898 104.941L92.7393 90.1284H97.2871L88.3789 112.493C87.9068 113.685 87.3095 114.729 86.5889 115.624C85.8931 116.543 85.0608 117.251 84.0918 117.748C83.1475 118.245 82.0295 118.494 80.7373 118.494C80.2403 118.494 79.7431 118.444 79.2461 118.344C78.7741 118.27 78.3389 118.145 77.9414 117.971V114.356C78.2395 114.43 78.6002 114.493 79.0225 114.542C79.4449 114.617 79.8553 114.655 80.2529 114.655C81.4206 114.655 82.2775 114.393 82.8242 113.872C83.3957 113.375 83.9053 112.604 84.3525 111.561L84.916 110.276L76.8984 90.1284H81.4082L87.0898 104.941ZM136.056 89.5454C137.724 89.5454 139.193 89.8566 140.463 90.479C141.732 91.0765 142.716 91.9228 143.413 93.0181C144.135 94.0887 144.496 95.3465 144.496 96.7905V110.311H139.865V108.178C139.607 108.463 139.333 108.726 139.043 108.966C138.321 109.539 137.499 109.987 136.578 110.311C135.657 110.61 134.636 110.759 133.516 110.759C132.096 110.759 130.864 110.522 129.818 110.049C128.773 109.576 127.963 108.904 127.391 108.033C126.818 107.136 126.531 106.103 126.531 104.933C126.531 103.813 126.78 102.816 127.278 101.945C127.776 101.049 128.548 100.301 129.594 99.7036C130.639 99.1061 131.959 98.6831 133.553 98.4341L139.604 97.4478V96.7905C139.603 95.9192 139.255 95.1971 138.558 94.6245C137.885 94.027 136.989 93.728 135.868 93.728C134.823 93.7281 133.889 94.0148 133.067 94.5874C132.271 95.1352 131.685 95.8693 131.312 96.7905L127.315 94.8481C127.714 93.7777 128.336 92.8563 129.183 92.0845C130.054 91.2877 131.076 90.6655 132.246 90.2173C133.416 89.7692 134.686 89.5454 136.056 89.5454ZM66.9688 89.6812C68.4844 89.6812 69.8386 89.9426 71.0312 90.4644C72.2237 90.9861 73.2299 91.7064 74.0498 92.6255C74.8698 93.52 75.4916 94.5514 75.9141 95.7192C76.3613 96.8871 76.585 98.1298 76.585 99.4468C76.585 99.7698 76.5727 100.106 76.5479 100.454C76.523 100.801 76.473 101.124 76.3984 101.422H61.3936C61.4416 102.287 61.632 103.071 61.9736 103.771C62.4954 104.79 63.2164 105.584 64.1357 106.156C65.0799 106.727 66.1482 107.013 67.3408 107.013C68.5584 107.013 69.5897 106.74 70.4346 106.193C71.3042 105.646 71.9874 104.938 72.4844 104.069L75.9141 105.746C75.5165 106.69 74.8947 107.548 74.0498 108.318C73.2298 109.063 72.2361 109.66 71.0684 110.107C69.9253 110.529 68.6704 110.741 67.3037 110.741C65.2911 110.741 63.5019 110.281 61.9365 109.362C60.396 108.418 59.191 107.15 58.3213 105.56C57.4516 103.945 57.0166 102.143 57.0166 100.155C57.0166 98.1173 57.4516 96.3159 58.3213 94.7505C59.2158 93.1851 60.4085 91.9546 61.8994 91.0601C63.3903 90.1408 65.0804 89.6812 66.9688 89.6812ZM156.807 96.3062L161.083 89.9927H166.798L159.701 100.114L166.761 110.31H161.046L156.807 103.994L152.567 110.31H146.815L153.912 100.114L146.778 89.9927H152.53L156.807 96.3062ZM37.6016 94.7505H50.4609V82.5249H54.8213V110.293H50.4609V98.6646H37.6016V110.293H33.2031V82.5249H37.6016V94.7505ZM104.203 86.021C104.203 90.0979 107.584 94.4015 111.844 94.4019C115.971 94.4019 119.273 90.363 119.476 86.4038L119.485 86.021V82.2876H123.958V110.243H119.485V95.939C117.395 97.8498 114.732 99.0601 111.844 99.0601C108.956 99.0599 106.293 97.8496 104.203 95.939V110.243H99.7305V82.2876H104.203V86.021ZM134.486 102.057C133.515 102.231 132.793 102.543 132.32 102.991C131.847 103.439 131.61 104.025 131.61 104.747C131.61 105.444 131.873 106.004 132.396 106.427C132.943 106.825 133.616 107.025 134.412 107.025C135.433 107.025 136.33 106.812 137.102 106.389C137.898 105.941 138.508 105.331 138.932 104.559C139.38 103.787 139.603 102.941 139.604 102.02V101.187L134.486 102.057ZM66.9688 93.2222C65.8505 93.2222 64.856 93.5081 63.9863 94.0796C63.1167 94.6263 62.4457 95.4217 61.9736 96.4653C61.7495 96.9491 61.5904 97.4833 61.4951 98.0679H72.1328C72.1066 97.4535 71.9758 96.8817 71.7393 96.353C71.3417 95.3841 70.7207 94.6262 69.876 94.0796C69.0561 93.5081 68.0868 93.2222 66.9688 93.2222Z";
+function appIcon(shape, tone){
+  const bg = tone==='purple' ? '#3C3682' : '#F6F6FC';
+  const wm = tone==='purple' ? '#F3EAFF' : '#21005E';
+  const rx = shape==='round' ? 100 : shape==='squircle' ? 24 : 0;
+  const stroke = tone==='light' ? ' stroke="#E7E4F2" stroke-width="1"' : '';
+  return `<svg class="apptile" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">`+
+    `<rect x="0.5" y="0.5" width="199" height="199" rx="${rx}" fill="${bg}"${stroke}/>`+
+    `<path d="${APP_WM_PATH}" fill="${wm}"/></svg>`;
+}
+
+/* Social avatar tile: soft lilac→pink gradient with brand-purple wordmark */
+function socialTile(shape){
+  const rx = shape==='round' ? 100 : 40;
+  const gid = 'sg_'+shape;
+  return `<svg class="apptile" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">`+
+    `<defs><linearGradient id="${gid}" x1="0" y1="0" x2="200" y2="200" gradientUnits="userSpaceOnUse">`+
+    `<stop stop-color="#ECEBFB"/><stop offset="1" stop-color="#F6E9F4"/></linearGradient></defs>`+
+    `<rect x="0.5" y="0.5" width="199" height="199" rx="${rx}" fill="url(#${gid})" stroke="#E7E4F2" stroke-width="1"/>`+
+    `<path d="${APP_WM_PATH}" fill="#21005E"/></svg>`;
+}
+
+/* Main logo — gradient wordmark (navy with gradient swoosh) */
+const GRADIENT_WM = `<svg class="wm" viewBox="0 0 400 109" xmlns="http://www.w3.org/2000/svg"><path d="M339.065 85L360.706 53.9061L338.952 23.04H356.492L373.462 48.0974H365.604L382.574 23.04H400L378.36 53.9061L399.887 85H382.46L365.717 60.0565H373.349L356.606 85H339.065Z" fill="#130739"/><path d="M298.514 86.5C294.186 86.5 290.428 85.7786 287.238 84.336C284.049 82.8933 281.582 80.8431 279.835 78.1855C278.089 75.452 277.216 72.3008 277.216 68.7321C277.216 65.3151 277.975 62.2779 279.493 59.6203C281.012 56.8868 283.366 54.6088 286.555 52.7865C289.744 50.9641 293.769 49.6733 298.628 48.914L318.902 45.611V57.0007L301.476 59.962C298.514 60.4935 296.312 61.4426 294.87 62.8094C293.427 64.1762 292.706 65.9606 292.706 68.1626C292.706 70.2887 293.503 71.9971 295.097 73.2879C296.768 74.5028 298.818 75.1103 301.248 75.1103C304.361 75.1103 307.095 74.4649 309.448 73.174C311.878 71.8073 313.739 69.947 315.029 67.5931C316.396 65.2392 317.079 62.6575 317.079 59.8481V43.9025C317.079 41.2449 316.016 39.0429 313.89 37.2965C311.84 35.4741 309.107 34.5629 305.69 34.5629C302.501 34.5629 299.653 35.4362 297.148 37.1826C294.718 38.8531 292.933 41.093 291.794 43.9025L279.607 37.9799C280.822 34.7148 282.721 31.9053 285.302 29.5515C287.96 27.1217 291.073 25.2234 294.642 23.8566C298.211 22.4899 302.083 21.8065 306.259 21.8065C311.347 21.8065 315.827 22.7556 319.699 24.6539C323.572 26.4763 326.571 29.0579 328.697 32.3989C330.899 35.664 332 39.4985 332 43.9025V85.1332H317.877V74.5408L321.066 74.313C319.471 76.9706 317.573 79.2106 315.371 81.0329C313.169 82.7794 310.663 84.1461 307.854 85.1332C305.044 86.0444 301.931 86.5 298.514 86.5Z" fill="#130739"/><path d="M137.239 108.964C136.176 108.964 134.999 108.85 133.708 108.622C132.493 108.47 131.317 108.204 130.178 107.825V101.446C131.089 101.674 132.114 101.864 133.253 102.016C134.468 102.168 135.569 102.244 136.556 102.244C140.276 102.168 143.2 101.256 145.326 99.5101C147.452 97.7636 149.388 94.8783 151.135 90.8539L155.463 80.717V87.0953L129.836 23.4268H137.353L159.335 78.3252H156.602L178.698 23.4268H186.329L158.082 92.3345C157.019 94.8403 155.615 97.384 153.868 99.9656C152.122 102.547 149.882 104.673 147.148 106.344C144.491 108.09 141.188 108.964 137.239 108.964Z" fill="#130739"/><path d="M101.903 85.2726C96.2085 85.2726 91.0832 83.9058 86.5273 81.1723C81.9714 78.3628 78.3647 74.5663 75.7071 69.7826C73.0495 64.923 71.7207 59.4939 71.7207 53.4953C71.7207 47.4967 73.0115 42.1436 75.5932 37.4358C78.1748 32.6522 81.6677 28.8936 86.0717 26.16C90.4757 23.4265 95.4113 22.0597 100.878 22.0597C105.055 22.0597 108.813 22.819 112.154 24.3377C115.571 25.8563 118.494 27.9824 120.924 30.7159C123.43 33.3735 125.328 36.4487 126.619 39.9416C127.986 43.3585 128.669 46.9652 128.669 50.7618C128.669 51.5211 128.631 52.3184 128.555 53.1536C128.479 53.9889 128.365 54.8621 128.214 55.7733H75.7071V49.5089H124.341L121.266 51.9008C121.721 47.4967 121.076 43.5483 119.33 40.0555C117.583 36.4867 115.077 33.6772 111.812 31.6271C108.623 29.501 104.979 28.438 100.878 28.438C96.778 28.438 93.0194 29.539 89.6025 31.741C86.1856 33.8671 83.49 36.8284 81.5158 40.6249C79.5416 44.3456 78.6304 48.6737 78.7823 53.6092C78.6304 58.5448 79.5796 62.9108 81.6297 66.7074C83.6799 70.5039 86.4893 73.5032 90.0581 75.7052C93.6269 77.8313 97.5753 78.8944 101.903 78.8944C106.307 78.8944 110.142 77.8693 113.407 75.8191C116.672 73.6931 119.33 70.8836 121.38 67.3908L127.189 70.466C125.822 73.2754 123.886 75.8191 121.38 78.0971C118.874 80.2991 115.951 82.0455 112.61 83.3363C109.345 84.6272 105.776 85.2726 101.903 85.2726Z" fill="#130739"/><path d="M0 84.8533V0H7.40331V38.6111H55.2401V0H62.6434V84.8533H55.2401V45.4449H7.40331V84.8533H0Z" fill="#130739"/><path d="M195.479 0.0294961H209.118V85.2726H195.479V0.0294961Z" fill="#130739"/><path d="M255.717 0.0296343H269.356V85.2727H255.717V0.0296343Z" fill="#130739"/><path d="M232.417 51.8424C212.14 51.8424 195.479 32.8998 195.479 12.6911L209.118 12.6911C209.118 25.1235 219.426 38.2036 232.417 38.2036C245.409 38.2036 255.717 25.1234 255.717 12.6911L269.356 12.6911C269.356 32.8997 252.695 51.8424 232.417 51.8424Z" fill="url(#gwm)"/><defs><linearGradient id="gwm" x1="232" y1="57.5" x2="232.346" y2="12.6904" gradientUnits="userSpaceOnUse"><stop offset="0.0159154" stop-color="#00E3FD"/><stop offset="0.367232" stop-color="#24038E"/><stop offset="0.691262" stop-color="#130739"/></linearGradient></defs></svg>`;
+const SPLASH_BG = '#F3EAFF';
+
+/* Bracket-M monogram (favicon mark) */
+function monogram(color){
+  return `<svg class="monomark" viewBox="0 0 156 180" xmlns="http://www.w3.org/2000/svg">`+
+    `<rect width="28.66" height="179.13" fill="${color}"/>`+
+    `<rect x="126.587" width="28.66" height="179.13" fill="${color}"/>`+
+    `<path d="M77.6247 108.882C35.013 108.882 0.00126 69.0754 0.00126 26.6086L28.6622 26.6086C28.6622 52.7342 50.3249 80.2209 77.6247 80.2209C104.924 80.2209 126.587 52.7342 126.587 26.6086L155.248 26.6086C155.248 69.0754 120.236 108.882 77.6247 108.882Z" fill="${color}"/>`+
+    `</svg>`;
+}
+
+/* Enclosed pill monograms (App & Icons) */
+const MONO_GRADIENT = `<svg class="monopill" viewBox="0 0 126 200" xmlns="http://www.w3.org/2000/svg"><path d="M0 62.963C0 28.1895 28.1895 0 62.963 0C97.7365 0 125.926 28.1895 125.926 62.963V137.037C125.926 171.811 97.7365 200 62.963 200C28.1895 200 0 171.811 0 137.037V62.963Z" fill="#130739"/><mask id="mmask" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="126" height="200"><path d="M0 62.963C0 28.1895 28.1895 0 62.963 0C97.7365 0 125.926 28.1895 125.926 62.963V137.037C125.926 171.811 97.7365 200 62.963 200C28.1895 200 0 171.811 0 137.037V62.963Z" fill="#130739"/></mask><g mask="url(#mmask)"><g filter="url(#mfilt)"><ellipse cx="64.814" cy="201.705" rx="84.5679" ry="86.4198" fill="url(#mgrad)" fill-opacity="0.7"/></g></g><path d="M22.4434 54.3213H37.4063V146.914H22.4434V54.3213Z" fill="#F5F5F5"/><path d="M88.5298 54.3213H103.493V146.914H88.5298V54.3213Z" fill="#F5F5F5"/><path d="M62.9681 109.879C40.7219 109.879 22.4434 92.3243 22.4434 70.3732L37.4064 70.3732C37.4064 83.8775 48.7158 95.0646 62.9681 95.0646C77.2204 95.0646 88.5298 83.8775 88.5298 70.3732H103.493C103.493 92.3243 85.2143 109.879 62.9681 109.879Z" fill="#F5F5F5"/><defs><filter id="mfilt" x="-25.1437" y="109.895" width="179.915" height="183.619" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB"><feFlood flood-opacity="0" result="bg"/><feBlend mode="normal" in="SourceGraphic" in2="bg" result="shape"/><feGaussianBlur stdDeviation="2.6949" result="e1"/></filter><linearGradient id="mgrad" x1="64.814" y1="131.168" x2="64.814" y2="288.125" gradientUnits="userSpaceOnUse"><stop stop-color="#00E3FD"/><stop offset="0.715931" stop-color="#6E1FFF"/></linearGradient></defs></svg>`;
+const MONO_FILLED = `<svg class="monopill" viewBox="0 0 126 200" xmlns="http://www.w3.org/2000/svg"><path d="M0 62.963C0 28.1895 28.1895 0 62.963 0C97.7365 0 125.926 28.1895 125.926 62.963V137.037C125.926 171.811 97.7365 200 62.963 200C28.1895 200 0 171.811 0 137.037V62.963Z" fill="#130739"/><path d="M22.4443 54.3203H37.4073V146.913H22.4443V54.3203Z" fill="#F5F5F5"/><path d="M88.5308 54.3203H103.494V146.913H88.5308V54.3203Z" fill="#F5F5F5"/><path d="M62.9691 109.878C40.7229 109.878 22.4444 92.3233 22.4444 70.3723H37.4073C37.4073 83.8765 48.7167 95.0636 62.9691 95.0636C77.2214 95.0636 88.5308 83.8765 88.5308 70.3723H103.494C103.494 92.3233 85.2152 109.878 62.9691 109.878Z" fill="#F5F5F5"/></svg>`;
+const MONO_OUT_NAVY = `<svg class="monopill" viewBox="0 0 131 200" xmlns="http://www.w3.org/2000/svg"><path d="M65.2178 0C101.236 0.000173777 130.435 29.1992 130.435 65.2178V134.783C130.434 170.802 101.236 200 65.2178 200C29.1993 200 0.000188856 170.802 0 134.783V65.2178C0 29.1991 29.1991 0 65.2178 0ZM65.2178 7.24609C33.2012 7.24609 7.24609 33.2012 7.24609 65.2178V134.783C7.24628 166.8 33.2013 192.754 65.2178 192.754C97.2341 192.754 123.188 166.799 123.188 134.783V65.2178C123.188 33.2013 97.2342 7.24627 65.2178 7.24609ZM41.3135 71.3008L41.3447 72.458C41.9676 84.3664 52.1372 94.0331 64.8496 94.0332C77.5615 94.0325 87.7297 84.366 88.3525 72.458L88.3838 71.3008V56.5215H102.16V141.771H88.3838V99.5156C81.9462 104.62 73.7441 107.674 64.8496 107.674C55.9547 107.674 47.7514 104.62 41.3135 99.5156V141.771H27.5371V56.5215H41.3135V71.3008Z" fill="#21005E"/></svg>`;
+const MONO_OUT_WHITE = `<svg class="monopill" viewBox="0 0 131 200" xmlns="http://www.w3.org/2000/svg"><path d="M65.2178 0C101.236 0.000173777 130.435 29.1992 130.435 65.2178V134.783C130.434 170.802 101.236 200 65.2178 200C29.1993 200 0.000188856 170.802 0 134.783V65.2178C0 29.1991 29.1991 0 65.2178 0ZM65.2178 7.24609C33.2012 7.24609 7.24609 33.2012 7.24609 65.2178V134.783C7.24628 166.8 33.2013 192.754 65.2178 192.754C97.2341 192.754 123.188 166.799 123.188 134.783V65.2178C123.188 33.2013 97.2342 7.24627 65.2178 7.24609ZM41.3135 71.3008L41.3447 72.458C41.9676 84.3664 52.1372 94.0331 64.8496 94.0332C77.5615 94.0325 87.7297 84.366 88.3525 72.458L88.3838 71.3008V56.5215H102.16V141.771H88.3838V99.5156C81.9462 104.62 73.7441 107.674 64.8496 107.674C55.9547 107.674 47.7514 104.62 41.3135 99.5156V141.771H27.5371V56.5215H41.3135V71.3008Z" fill="#F4F4F4"/></svg>`;
+
+/* asset registry: filename -> { render(), tone } tone=light|dark for the swatch bg */
+const ASSETS = {
+  "Wordmark_black.png":            {render:()=>wordmark('#1A1A1A'),           bg:'#fff',  tone:'light'},
+  "Wordmark_purple.png":           {render:()=>wordmark('#21005E'),           bg:'#fff',  tone:'light'},
+  "Wordmark_white.png":            {render:()=>wordmark('#fff'),               bg:'#21005E',tone:'dark'},
+  "Wordmark_white_purple":         {render:()=>wordmark('#fff'),               bg:'#21005E',tone:'dark', fname:'Wordmark_white.png'},
+  "Wordmark_white_ink":            {render:()=>wordmark('#fff'),               bg:'#1A1A1A',tone:'dark', fname:'Wordmark_white.png'},
+  "Bracket M — Navy, Flat.svg":    {render:()=>monogram('#130739'), bg:'#fff',    tone:'light'},
+  "Bracket M — White, Flat.svg":   {render:()=>monogram('#fff'),     bg:'#21005E', tone:'dark'},
+  "Monogram — Gradient.svg":       {render:()=>MONO_GRADIENT,        bg:'#F7F5EF'},
+  "Monogram Filled — Navy.svg":    {render:()=>MONO_FILLED,          bg:'#F7F5EF'},
+  "Monogram Outline — Navy.svg":   {render:()=>MONO_OUT_NAVY,        bg:'#fff'},
+  "Monogram Outline — White.svg":  {render:()=>MONO_OUT_WHITE,       bg:'#21005E'},
+  "App Icon.svg":                  {render:()=>appIcon('square','purple'),   bg:'#F7F5EF'},
+  "App Icon-1.svg":                {render:()=>appIcon('round','purple'),    bg:'#F7F5EF'},
+  "App Icon-2.svg":                {render:()=>appIcon('squircle','purple'), bg:'#F7F5EF'},
+  "App Icon-3.svg":                {render:()=>appIcon('square','light'),    bg:'#EDEAF7'},
+  "App Icon-4.svg":                {render:()=>appIcon('round','light'),     bg:'#EDEAF7'},
+  "App Icon-5.svg":                {render:()=>appIcon('squircle','light'),  bg:'#EDEAF7'},
+  "Social_Media_Round.png":        {render:()=>socialTile('round'),  bg:'#F7F5EF'},
+  "Social_Media_Square.png":       {render:()=>socialTile('square'), bg:'#F7F5EF'},
+  "Open_graph.png":                {render:()=>`<div class="banner og" style="background:#21005E">${wordmark('#fff','wm')}</div>`, bg:'#EFEBFB', tone:'light', wide:true},
+  "Social_banner_opt1.png":        {render:()=>`<div class="banner" style="background:#21005E">${wordmark('#fff','wm')}</div>`, bg:'#EFEBFB', tone:'light', wide:true},
+  "Social_banner_opt2.png":        {render:()=>`<div class="banner" style="background:#4000B8">${wordmark('#fff','wm')}</div>`, bg:'#EFEBFB', tone:'light', wide:true},
+  "Social_banner_opt3.png":        {render:()=>`<div class="banner" style="background:#F3EAFF">${wordmark('#21005E','wm')}</div>`, bg:'#EFEBFB', tone:'light', wide:true},
+  "GRADIENT":                      {render:()=>`<div class="banner" style="background:linear-gradient(160deg,#4000B8,#21005E)">${wordmark('#fff','wm')}</div>`, bg:'#EFEBFB', tone:'light', wide:true, fname:'Brand gradient', hideDl:true},
+  "Splash.svg":                    {render:()=>`<div class="banner" style="background:${SPLASH_BG}">${GRADIENT_WM}</div>`, bg:'#EFEBFB', wide:true},
+};
+
+/* placements — edit freely */
+const PLACEMENTS = [
+  {name:"Favicon", cat:"App & Icons", note:"The only monogram in use — the Bracket M mark.", light:"Bracket M — Navy, Flat.svg", dark:"Bracket M — White, Flat.svg"},
+  {name:"App icon — square", cat:"App & Icons", note:"Self-contained tile — pick Primary or Light.", light:"App Icon.svg", dark:"App Icon-3.svg", labels:["Primary","Light"]},
+  {name:"App icon — rounded", cat:"App & Icons", note:"Squircle (iOS style) — Primary or Light.", light:"App Icon-2.svg", dark:"App Icon-5.svg", labels:["Primary","Light"]},
+  {name:"App icon — round", cat:"App & Icons", note:"Circular — Primary or Light.", light:"App Icon-1.svg", dark:"App Icon-4.svg", labels:["Primary","Light"]},
+  {name:"Push notification icon", cat:"App & Icons", note:"Square tile — Primary or Light.", light:"App Icon.svg", dark:"App Icon-3.svg", labels:["Primary","Light"]},
+  {name:"Monogram", cat:"App & Icons", cols:2, note:"Enclosed mark — four finishes. Outline Brand (#21005E) for light, Outline White for dark.", variants:[
+    {asset:"Monogram — Gradient.svg", label:"Gradient"},
+    {asset:"Monogram Filled — Navy.svg", label:"Filled Brand"},
+    {asset:"Monogram Outline — Navy.svg", label:"Outline Brand"},
+    {asset:"Monogram Outline — White.svg", label:"Outline White"}]},
+  {name:"Splash screen", cat:"Product", note:"Main logo on Secondary #F3EAFF — no gradient-pill backgrounds.", light:"Splash.svg", labels:["Splash"]},
+  {name:"Header, footer & in-app bar", cat:"Product", note:"Website header, website footer and the in-app top bar all share this wordmark.", light:"Wordmark_purple.png", dark:"Wordmark_white_purple"},
+  {name:"Email header", cat:"Product", note:"Wordmark, matched to theme.", light:"Wordmark_black.png", dark:"Wordmark_white.png"},
+  {name:"Social avatar", cat:"Social", note:"Gradient tile — round or square.", variants:[
+    {asset:"Social_Media_Round.png", label:"Round"},
+    {asset:"Social_Media_Square.png", label:"Square"}]},
+  {name:"Social share / Open Graph", cat:"Social", note:"Same image for light & dark.", light:"Open_graph.png", dark:"Open_graph.png"},
+  {name:"Social banner", cat:"Social", cols:1, note:"Three options — pick by campaign.", variants:[
+    {asset:"Social_banner_opt1.png", label:"Option 1"},
+    {asset:"Social_banner_opt2.png", label:"Option 2"},
+    {asset:"Social_banner_opt3.png", label:"Option 3"}]},
+  {name:"Merch / physical", cat:"Merch", note:"Wordmark, matched to material.", light:"Wordmark_black.png", dark:"Wordmark_white.png"},
+  {name:"Slide decks", cat:"Internal", note:"Brand-purple wordmark on light; white on brand purple.", light:"Wordmark_purple.png", dark:"Wordmark_white.png"},
+];
+
+/* ---------------- render engine ---------------- */
+const CATS = ["All", ...Array.from(new Set(PLACEMENTS.map(p=>p.cat)))];
+let activeCat = "All", query = "";
+
+function pv(token, roleLabel){
+  if(token==="SELF"){
+    return `<div class="pv single"><div class="lbl">${roleLabel}</div>
+      <div class="bg" style="background:#F7F5EF"><span class="selfnote">Self-contained tile —<br>works on any background</span></div></div>`;
+  }
+  const a = ASSETS[token];
+  if(!a) return "";
+  const fname = a.fname || token;
+  const dl = `<a class="dl" href="${DRIVE_FOLDER}" target="_blank" rel="noopener">↓ Drive</a>`;
+  return `<div class="pv">
+    <div class="lbl">${roleLabel}</div>
+    <div class="bg" style="background:${a.bg}">${a.render()}</div>
+    <div class="fname">${fname}</div>${a.hideDl?'':dl}
+  </div>`;
+}
+
+function card(p){
+  const both = p.light && p.dark && p.dark!=="SELF";
+  let previews;
+  if(p.variants){
+    const cols = p.cols || 2;
+    previews = `<div class="pvgrid" style="grid-template-columns:repeat(${cols},minmax(0,1fr))">`+
+      p.variants.map(v=>pv(v.asset, v.label)).join("")+`</div>`;
+  } else if(!p.dark){
+    previews = pv(p.light, (p.labels&&p.labels[0])||"Monogram");
+  } else if(p.dark==="SELF"){
+    previews = pv(p.light, "Any background");
+  } else if(p.light===p.dark){
+    previews = pv(p.light, "Light & dark");
+  } else {
+    const l1 = (p.labels&&p.labels[0])||"Light bg";
+    const l2 = (p.labels&&p.labels[1])||"Dark bg";
+    previews = pv(p.light,l1) + pv(p.dark,l2);
+  }
+  return `<div class="item">
+    <div class="top">
+      <span class="cat">${p.cat}</span>
+      <h3>${p.name}</h3>
+      <div class="note">${p.note||""}</div>
+    </div>
+    <div class="previews">${previews}</div>
+  </div>`;
+}
+
+function render(){
+  const list = PLACEMENTS.filter(p=>{
+    const okCat = activeCat==="All" || p.cat===activeCat;
+    const q = query.trim().toLowerCase();
+    const okQ = !q || (p.name+" "+p.cat+" "+(p.note||"")+" "+p.light+" "+p.dark).toLowerCase().includes(q);
+    return okCat && okQ;
+  });
+  document.getElementById("grid").innerHTML = list.map(card).join("");
+  document.getElementById("empty").style.display = list.length? "none":"block";
+  document.getElementById("count").textContent = `${list.length} placement${list.length===1?"":"s"}`;
+}
+
+function buildChips(){
+  document.getElementById("chips").innerHTML = CATS.map(c=>
+    `<button class="chip ${c===activeCat?'active':''}" data-cat="${c}">${c}</button>`).join("");
+  document.querySelectorAll(".chip").forEach(b=>b.onclick=()=>{activeCat=b.dataset.cat;buildChips();render();});
+}
+
+document.getElementById("folderBtn").href = DRIVE_FOLDER;
+document.getElementById("search").addEventListener("input",e=>{query=e.target.value;render();});
+document.getElementById("foot").innerHTML =
+  `HeyMax brand guidelines · Logo Picker · ${PLACEMENTS.length} placements · Plus Jakarta Sans<br>`+
+  `To update: edit the <b>PLACEMENTS</b> array in this file. Previews are indicative — download originals from the Drive folder.`;
+buildChips();
+render();
+</script>
+</body>
+</html>
