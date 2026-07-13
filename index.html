@@ -502,16 +502,33 @@ function buildCatNav(){
 }
 
 document.getElementById("navbrand").innerHTML = GRADIENT_WM;
-/* usage-guide artwork */
-document.getElementById("gart1").innerHTML = GRADIENT_WM.replace('class="wm"','class="wordmark"');
-document.getElementById("gart2").innerHTML = wordmark('#21005E');
-document.getElementById("gart3").innerHTML = monogram('#130739');
-document.getElementById("gart4").innerHTML = MONO_OUT_NAVY;
+/* usage-guide artwork — follows the Light/Dark toggle */
+function renderGuideArt(){
+  const dark = mode === "dark";
+  const set = (id, bg, html) => {
+    const el = document.getElementById(id);
+    el.style.background = bg;
+    el.innerHTML = html;
+  };
+  if(dark){
+    set("gart1", "#21005E", GRADIENT_WM_WHITE.replace('<svg ', '<svg class="wordmark" '));
+    set("gart2", "#21005E", wordmark('#FFFFFF'));
+    set("gart3", "#21005E", monogram('#FFFFFF'));
+    set("gart4", "#21005E", MONO_OUT_WHITE);
+  } else {
+    set("gart1", "#F3EAFF", GRADIENT_WM.replace('class="wm"', 'class="wordmark"'));
+    set("gart2", "#fff", wordmark('#21005E'));
+    set("gart3", "#fff", monogram('#130739'));
+    set("gart4", "#fff", MONO_OUT_NAVY);
+  }
+}
+renderGuideArt();
 document.getElementById("folderBtn").href = DRIVE_FOLDER;
 document.getElementById("search").addEventListener("input",e=>{query=e.target.value;render();});
 document.querySelectorAll("#modeSeg button").forEach(b=>b.onclick=()=>{
   mode = b.dataset.mode;
   document.querySelectorAll("#modeSeg button").forEach(x=>x.classList.toggle("active", x===b));
+  renderGuideArt();
   render();
 });
 document.getElementById("foot").innerHTML =
