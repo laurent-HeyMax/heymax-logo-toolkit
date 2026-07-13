@@ -47,6 +47,10 @@
   }
   .tn-select:hover{border-color:#C9C3B8}
   .tn-select:focus{outline:none;border-color:var(--primary-violet)}
+  .seg{display:flex;border:1px solid var(--line);border-radius:999px;background:#fff;overflow:hidden}
+  .seg button{font-family:inherit;font-size:12.5px;font-weight:700;padding:8px 14px;border:none;background:transparent;color:var(--muted);cursor:pointer;transition:.15s}
+  .seg button:hover{color:var(--ink)}
+  .seg button.active{background:var(--primary-deep);color:#fff}
 
   /* controls */
   .controls{background:var(--page);padding:18px 0 14px;margin-top:14px;border-bottom:1px solid var(--line)}
@@ -148,6 +152,12 @@
   <div class="tn-inner">
     <div class="tn-brand" id="navbrand" aria-label="HeyMax"></div>
     <div class="tn-right">
+      <span class="tn-label">Logos</span>
+      <div class="seg" id="modeSeg" role="group" aria-label="Logo background mode">
+        <button data-mode="all" class="active">All</button>
+        <button data-mode="light">Light</button>
+        <button data-mode="dark">Dark</button>
+      </div>
       <label class="tn-label" for="catnav">Jump to</label>
       <select id="catnav" class="tn-select" aria-label="Filter by category"></select>
     </div>
@@ -327,32 +337,32 @@ const MONO_OUT_WHITE = `<svg class="monopill" viewBox="0 0 131 200" xmlns="http:
 
 /* asset registry: filename -> { render(), tone } tone=light|dark for the swatch bg */
 const ASSETS = {
-  "Wordmark_black.png":            {render:()=>wordmark('#1A1A1A'),           bg:'#fff',  tone:'light'},
-  "Wordmark_purple.png":           {render:()=>wordmark('#21005E'),           bg:'#fff',  tone:'light'},
-  "Wordmark_white.png":            {render:()=>wordmark('#fff'),               bg:'#21005E',tone:'dark'},
-  "Wordmark_white_purple":         {render:()=>wordmark('#fff'),               bg:'#21005E',tone:'dark', fname:'Wordmark_white.png'},
-  "Wordmark_white_ink":            {render:()=>wordmark('#fff'),               bg:'#1A1A1A',tone:'dark', fname:'Wordmark_white.png'},
-  "Bracket M — Navy, Flat.svg":    {render:()=>monogram('#130739'), bg:'#fff',    tone:'light'},
-  "Bracket M — White, Flat.svg":   {render:()=>monogram('#fff'),     bg:'#21005E', tone:'dark'},
-  "Monogram — Gradient.svg":       {render:()=>MONO_GRADIENT,        bg:'#F7F5EF'},
-  "Monogram Filled — Navy.svg":    {render:()=>MONO_FILLED,          bg:'#F7F5EF'},
-  "Monogram Outline — Navy.svg":   {render:()=>MONO_OUT_NAVY,        bg:'#fff'},
-  "Monogram Outline — White.svg":  {render:()=>MONO_OUT_WHITE,       bg:'#21005E'},
-  "App Icon.svg":                  {render:()=>appIcon('square','purple'),   bg:'#F7F5EF'},
-  "App Icon-1.svg":                {render:()=>appIcon('round','purple'),    bg:'#F7F5EF'},
-  "App Icon-2.svg":                {render:()=>appIcon('squircle','purple'), bg:'#F7F5EF'},
-  "App Icon-3.svg":                {render:()=>appIcon('square','light'),    bg:'#EDEAF7'},
-  "App Icon-4.svg":                {render:()=>appIcon('round','light'),     bg:'#EDEAF7'},
-  "App Icon-5.svg":                {render:()=>appIcon('squircle','light'),  bg:'#EDEAF7'},
-  "Social_Media_Round.png":        {render:()=>socialTile('round'),  bg:'#F7F5EF'},
-  "Social_Media_Square.png":       {render:()=>socialTile('square'), bg:'#F7F5EF'},
-  "Open_graph.png":                {render:()=>wordmark('#fff'), bg:'#21005E', fullbleed:true, wide:true},
-  "banner_main":                   {render:()=>GRADIENT_WM,        bg:'#F3EAFF', fullbleed:true, wide:true, fname:'Social_banner_gradient_dark.png'},
-  "banner_gwhite":                 {render:()=>GRADIENT_WM_WHITE,  bg:'#21005E', fullbleed:true, wide:true, fname:'Social_banner_gradient_white.png'},
-  "banner_fdark":                  {render:()=>wordmark('#130739'),bg:'#F3EAFF', fullbleed:true, wide:true, fname:'Social_banner_flat_dark.png'},
-  "banner_fwhite":                 {render:()=>wordmark('#FFFFFF'), bg:'#21005E', fullbleed:true, wide:true, fname:'Social_banner_flat_white.png'},
-  "GRADIENT":                      {render:()=>`<div class="banner" style="background:linear-gradient(160deg,#4000B8,#21005E)">${wordmark('#fff','wm')}</div>`, bg:'#EFEBFB', tone:'light', wide:true, fname:'Brand gradient', hideDl:true},
-  "Splash.svg":                    {render:()=>`<div class="banner" style="background:${SPLASH_BG}">${GRADIENT_WM}</div>`, bg:'#EFEBFB', wide:true},
+  "Wordmark_black.png":            {render:()=>wordmark('#1A1A1A'),           bg:'#fff',  tone:'light', mode:'light'},
+  "Wordmark_purple.png":           {render:()=>wordmark('#21005E'),           bg:'#fff',  tone:'light', mode:'light'},
+  "Wordmark_white.png":            {render:()=>wordmark('#fff'),               bg:'#21005E',tone:'dark', mode:'dark'},
+  "Wordmark_white_purple":         {render:()=>wordmark('#fff'),               bg:'#21005E',tone:'dark', mode:'dark', fname:'Wordmark_white.png'},
+  "Wordmark_white_ink":            {render:()=>wordmark('#fff'),               bg:'#1A1A1A',tone:'dark', mode:'dark', fname:'Wordmark_white.png'},
+  "Bracket M — Navy, Flat.svg":    {render:()=>monogram('#130739'), bg:'#fff',    tone:'light', mode:'light'},
+  "Bracket M — White, Flat.svg":   {render:()=>monogram('#fff'),     bg:'#21005E', tone:'dark', mode:'dark'},
+  "Monogram — Gradient.svg":       {render:()=>MONO_GRADIENT,        bg:'#F7F5EF', mode:'both'},
+  "Monogram Filled — Navy.svg":    {render:()=>MONO_FILLED,          bg:'#F7F5EF', mode:'both'},
+  "Monogram Outline — Navy.svg":   {render:()=>MONO_OUT_NAVY,        bg:'#fff', mode:'light'},
+  "Monogram Outline — White.svg":  {render:()=>MONO_OUT_WHITE,       bg:'#21005E', mode:'dark'},
+  "App Icon.svg":                  {render:()=>appIcon('square','purple'),   bg:'#F7F5EF', mode:'dark'},
+  "App Icon-1.svg":                {render:()=>appIcon('round','purple'),    bg:'#F7F5EF', mode:'dark'},
+  "App Icon-2.svg":                {render:()=>appIcon('squircle','purple'), bg:'#F7F5EF', mode:'dark'},
+  "App Icon-3.svg":                {render:()=>appIcon('square','light'),    bg:'#EDEAF7', mode:'light'},
+  "App Icon-4.svg":                {render:()=>appIcon('round','light'),     bg:'#EDEAF7', mode:'light'},
+  "App Icon-5.svg":                {render:()=>appIcon('squircle','light'),  bg:'#EDEAF7', mode:'light'},
+  "Social_Media_Round.png":        {render:()=>socialTile('round'),  bg:'#F7F5EF', mode:'both'},
+  "Social_Media_Square.png":       {render:()=>socialTile('square'), bg:'#F7F5EF', mode:'both'},
+  "Open_graph.png":                {render:()=>wordmark('#fff'), bg:'#21005E', fullbleed:true, wide:true, mode:'both'},
+  "banner_main":                   {render:()=>GRADIENT_WM,        bg:'#F3EAFF', fullbleed:true, wide:true, mode:'light', fname:'Social_banner_gradient_dark.png'},
+  "banner_gwhite":                 {render:()=>GRADIENT_WM_WHITE,  bg:'#21005E', fullbleed:true, wide:true, mode:'dark', fname:'Social_banner_gradient_white.png'},
+  "banner_fdark":                  {render:()=>wordmark('#130739'),bg:'#F3EAFF', fullbleed:true, wide:true, mode:'light', fname:'Social_banner_flat_dark.png'},
+  "banner_fwhite":                 {render:()=>wordmark('#FFFFFF'), bg:'#21005E', fullbleed:true, wide:true, mode:'dark', fname:'Social_banner_flat_white.png'},
+  "GRADIENT":                      {render:()=>`<div class="banner" style="background:linear-gradient(160deg,#4000B8,#21005E)">${wordmark('#fff','wm')}</div>`, bg:'#EFEBFB', tone:'light', wide:true, mode:'both', fname:'Brand gradient', hideDl:true},
+  "Splash.svg":                    {render:()=>`<div class="banner" style="background:${SPLASH_BG}">${GRADIENT_WM}</div>`, bg:'#EFEBFB', wide:true, mode:'light'},
 };
 
 /* placements — edit freely */
@@ -393,7 +403,16 @@ const PLACEMENTS = [
 
 /* ---------------- render engine ---------------- */
 const CATS = ["All", ...Array.from(new Set(PLACEMENTS.map(p=>p.cat)))];
-let activeCat = "All", query = "";
+let activeCat = "All", query = "", mode = "all";
+
+function modeOf(token){
+  const a = ASSETS[token];
+  return (a && a.mode) || "both";
+}
+function inMode(token){
+  const m = modeOf(token);
+  return mode === "all" || m === "both" || m === mode;
+}
 
 function pv(token, roleLabel){
   if(token==="SELF"){
@@ -414,12 +433,14 @@ function pv(token, roleLabel){
 }
 
 function card(p){
-  const both = p.light && p.dark && p.dark!=="SELF";
   let previews;
   if(p.variants){
-    const cols = p.cols || 2;
+    let vs = p.variants;
+    const filtered = vs.filter(v=>inMode(v.asset));
+    if(filtered.length) vs = filtered;
+    const cols = Math.min(p.cols || 2, vs.length);
     previews = `<div class="pvgrid" style="grid-template-columns:repeat(${cols},minmax(0,1fr))">`+
-      p.variants.map(v=>pv(v.asset, v.label)).join("")+`</div>`;
+      vs.map(v=>pv(v.asset, v.label)).join("")+`</div>`;
   } else if(!p.dark){
     previews = pv(p.light, (p.labels&&p.labels[0])||"Monogram");
   } else if(p.dark==="SELF"){
@@ -429,7 +450,10 @@ function card(p){
   } else {
     const l1 = (p.labels&&p.labels[0])||"Light bg";
     const l2 = (p.labels&&p.labels[1])||"Dark bg";
-    previews = pv(p.light,l1) + pv(p.dark,l2);
+    const pair = [{t:p.light,l:l1},{t:p.dark,l:l2}];
+    let show = pair.filter(x=>inMode(x.t));
+    if(!show.length) show = pair;
+    previews = show.map(x=>pv(x.t,x.l)).join("");
   }
   return `<div class="item">
     <div class="top">
@@ -485,6 +509,11 @@ document.getElementById("gart3").innerHTML = monogram('#130739');
 document.getElementById("gart4").innerHTML = MONO_OUT_NAVY;
 document.getElementById("folderBtn").href = DRIVE_FOLDER;
 document.getElementById("search").addEventListener("input",e=>{query=e.target.value;render();});
+document.querySelectorAll("#modeSeg button").forEach(b=>b.onclick=()=>{
+  mode = b.dataset.mode;
+  document.querySelectorAll("#modeSeg button").forEach(x=>x.classList.toggle("active", x===b));
+  render();
+});
 document.getElementById("foot").innerHTML =
   `HeyMax brand guidelines · Logo Picker · ${PLACEMENTS.length} placements · Plus Jakarta Sans<br>`+
   `To update: edit the <b>PLACEMENTS</b> array in this file. Previews are indicative — download originals from the Drive folder.`;
