@@ -70,6 +70,36 @@
     padding:9px 16px;border-radius:10px;white-space:nowrap;
   }
 
+  /* usage guide (hierarchy) */
+  .guide{margin-top:30px}
+  .guide .kick{font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--primary-violet)}
+  .guide h1{font-size:30px;font-weight:800;letter-spacing:-.02em;margin:6px 0 8px}
+  .guide p.lede{font-size:14.5px;color:var(--muted);max-width:680px;line-height:1.55;margin-bottom:20px}
+  .guide p.lede b{color:var(--ink)}
+  .g-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
+  .g-card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px;display:flex;flex-direction:column}
+  .g-rank{display:flex;align-items:center;gap:8px;margin-bottom:12px}
+  .g-num{width:26px;height:26px;border-radius:50%;background:var(--primary-deep);color:#fff;font-size:13px;font-weight:800;display:flex;align-items:center;justify-content:center;flex:0 0 auto}
+  .g-tag{font-size:10.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:3px 9px;border-radius:6px;background:var(--secondary);color:var(--primary-violet)}
+  .g-tag.restricted{background:#FDECEC;color:#B3261E}
+  .g-art{height:96px;border-radius:12px;border:1px solid rgba(0,0,0,.05);display:flex;align-items:center;justify-content:center;padding:16px;margin-bottom:12px}
+  .g-art .wordmark{width:72%}
+  .g-art .monomark{height:56px}
+  .g-art .monopill{height:70px}
+  .g-card h3{font-size:15.5px;font-weight:700;margin-bottom:6px}
+  .g-card ul{list-style:none;font-size:12.5px;color:var(--muted);line-height:1.5}
+  .g-card ul li{padding-left:16px;position:relative;margin-bottom:3px}
+  .g-card ul li::before{content:"·";position:absolute;left:4px;font-weight:800;color:var(--primary-violet)}
+  .g-card ul li.no::before{content:"✕";font-size:9px;top:2px;color:#B3261E}
+  .g-check{margin-top:16px;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px 18px}
+  .g-check summary{font-size:14px;font-weight:700;cursor:pointer;list-style:none;display:flex;align-items:center;gap:8px}
+  .g-check summary::before{content:"▸";color:var(--primary-violet);transition:.15s}
+  .g-check[open] summary::before{transform:rotate(90deg)}
+  .g-check ol{margin:12px 0 4px 20px;font-size:13.5px;line-height:1.7;color:var(--ink)}
+  .g-check ol b{color:var(--primary-deep)}
+  .g-donts{margin-top:14px;font-size:12.5px;color:var(--muted);line-height:1.55}
+  .g-donts b{color:var(--ink)}
+
   /* grid */
   .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:18px;margin-top:22px}
   .item{background:var(--card);border:1px solid var(--line);border-radius:18px;overflow:hidden;display:flex;flex-direction:column}
@@ -124,6 +154,70 @@
   </div>
 </nav>
 <div class="wrap">
+
+  <section class="guide" id="guide">
+    <span class="kick">Start here</span>
+    <h1>Which logo do I use?</h1>
+    <p class="lede">Four marks, one hierarchy. <b>When in doubt, use №1 — the gradient main logo.</b> Everything else exists for a specific job; if your situation isn't listed, default to №1 or ask the design team.</p>
+
+    <div class="g-grid">
+      <div class="g-card">
+        <div class="g-rank"><span class="g-num">1</span><span class="g-tag">Primary</span></div>
+        <div class="g-art" id="gart1" style="background:#F3EAFF"></div>
+        <h3>Main logo — Gradient</h3>
+        <ul>
+          <li>The default. Anywhere the brand should shine</li>
+          <li>Website, marketing, ads, decks, social</li>
+          <li>Dark version on light bg, light version on brand purple</li>
+        </ul>
+      </div>
+      <div class="g-card">
+        <div class="g-rank"><span class="g-num">2</span><span class="g-tag">Secondary</span></div>
+        <div class="g-art" id="gart2" style="background:#fff"></div>
+        <h3>Main logo — Flat</h3>
+        <ul>
+          <li>Small sizes, where the gradient gets muddy</li>
+          <li>Limited colours: one-colour print, embroidery, engraving</li>
+          <li>Busy backgrounds where flat reads clearer</li>
+          <li class="no">Not a style preference — a fallback</li>
+        </ul>
+      </div>
+      <div class="g-card">
+        <div class="g-rank"><span class="g-num">3</span><span class="g-tag restricted">Restricted</span></div>
+        <div class="g-art" id="gart3" style="background:#fff"></div>
+        <h3>M letterform</h3>
+        <ul>
+          <li>Merch: tees, caps, stickers, totes</li>
+          <li>In-app animation: loading states, motion moments</li>
+          <li class="no">Never a logo replacement in marketing or docs</li>
+        </ul>
+      </div>
+      <div class="g-card">
+        <div class="g-rank"><span class="g-num">4</span><span class="g-tag restricted">Restricted</span></div>
+        <div class="g-art" id="gart4" style="background:#fff"></div>
+        <h3>Monogram — M in pill</h3>
+        <ul>
+          <li>Merch: pins, embroidery, small details</li>
+          <li>Small scale: name cards, tiny print areas</li>
+          <li>Watermarks on photos, docs, video</li>
+          <li class="no">Never the main logo, never the app icon</li>
+        </ul>
+      </div>
+    </div>
+
+    <details class="g-check">
+      <summary>Quick decision checklist</summary>
+      <ol>
+        <li>Marketing, deck, website, anything public-facing? → <b>Gradient main logo.</b> Done.</li>
+        <li>Small, one-colour, or on a busy background? → <b>Flat main logo.</b></li>
+        <li>Merch or an in-app animation? → <b>M letterform</b> (or monogram for merch).</li>
+        <li>Name card, watermark, or a tiny space? → <b>Monogram.</b></li>
+        <li>Still not sure? → <b>Gradient main logo</b>, or ask the design team.</li>
+      </ol>
+    </details>
+
+    <p class="g-donts"><b>Applies to every mark:</b> never stretch, rotate, recolour, fade, or add effects · respect the clear space · only brand-provided gradients · always use the official files — never retype the logo. The MaxMiles mark represents the currency only, never the brand.</p>
+  </section>
 
   <div class="controls">
     <div class="chips" id="chips"></div>
@@ -276,7 +370,10 @@ const PLACEMENTS = [
     {asset:"banner_gwhite", label:"Gradient white"},
     {asset:"banner_fdark", label:"Flat dark"},
     {asset:"banner_fwhite", label:"Flat white"}]},
-  {name:"Merch / physical", cat:"Merch", note:"Wordmark, matched to material.", light:"Wordmark_black.png", dark:"Wordmark_white.png"},
+  {name:"Merch / physical", cat:"Merch", note:"Wordmark first, matched to material. The M letterform and monogram are approved as merch accents.", light:"Wordmark_black.png", dark:"Wordmark_white.png"},
+  {name:"Name cards & small print", cat:"Merch", note:"Monogram for spaces too tight for the wordmark.", light:"Monogram Outline — Navy.svg", dark:"Monogram Outline — White.svg"},
+  {name:"In-app animation", cat:"Product", note:"M letterform only — loading states, transitions and motion moments inside the app. Not for marketing.", light:"Bracket M — Navy, Flat.svg", dark:"Bracket M — White, Flat.svg"},
+  {name:"Watermark", cat:"Internal", note:"Monogram, kept subtle — photos, documents, video.", light:"Monogram Outline — Navy.svg", dark:"Monogram Outline — White.svg"},
   {name:"Slide decks", cat:"Internal", note:"Brand-purple wordmark on light; white on brand purple.", light:"Wordmark_purple.png", dark:"Wordmark_white.png"},
 
   /* 2 — App icons */
@@ -286,8 +383,8 @@ const PLACEMENTS = [
   {name:"Push notification icon", cat:"App & Icons", note:"Square tile — Primary or Light.", light:"App Icon.svg", dark:"App Icon-3.svg", labels:["Primary","Light"]},
 
   /* 3 — The M alone (monogram) / favicon */
-  {name:"Favicon", cat:"App & Icons", note:"The only monogram in use — the Bracket M mark.", light:"Bracket M — Navy, Flat.svg", dark:"Bracket M — White, Flat.svg"},
-  {name:"Monogram", cat:"App & Icons", cols:2, note:"Enclosed mark — four finishes. Outline Brand (#21005E) for light, Outline White for dark.", variants:[
+  {name:"Favicon", cat:"App & Icons", note:"The Bracket M mark. The M alone is also approved for merch and in-app animation — nothing else.", light:"Bracket M — Navy, Flat.svg", dark:"Bracket M — White, Flat.svg"},
+  {name:"Monogram", cat:"App & Icons", cols:2, note:"Enclosed mark, four finishes — merch, small scale (name cards) and watermarks only. Outline Brand (#21005E) for light, Outline White for dark.", variants:[
     {asset:"Monogram — Gradient.svg", label:"Gradient"},
     {asset:"Monogram Filled — Navy.svg", label:"Filled Brand"},
     {asset:"Monogram Outline — Navy.svg", label:"Outline Brand"},
@@ -381,6 +478,11 @@ function buildCatNav(){
 }
 
 document.getElementById("navbrand").innerHTML = GRADIENT_WM;
+/* usage-guide artwork */
+document.getElementById("gart1").innerHTML = GRADIENT_WM.replace('class="wm"','class="wordmark"');
+document.getElementById("gart2").innerHTML = wordmark('#21005E');
+document.getElementById("gart3").innerHTML = monogram('#130739');
+document.getElementById("gart4").innerHTML = MONO_OUT_NAVY;
 document.getElementById("folderBtn").href = DRIVE_FOLDER;
 document.getElementById("search").addEventListener("input",e=>{query=e.target.value;render();});
 document.getElementById("foot").innerHTML =

@@ -5,9 +5,21 @@ Machine- and human-readable reference for choosing the correct HeyMax logo. Pair
 **Typeface:** Plus Jakarta Sans
 **Asset source:** [Logo Placements Drive folder](https://drive.google.com/drive/folders/1bTzH-rSwBXhQkRZV049NIn3o9oceB5ji)
 
+## Hierarchy
+
+Four marks, one order. When in doubt, use №1.
+
+| Rank | Mark | Status | Use when | Never |
+|------|------|--------|----------|-------|
+| 1 | Main logo — Gradient | Primary | Default. Website, marketing, ads, decks, social — anywhere the brand is the star | Small sizes where the gradient muddies |
+| 2 | Main logo — Flat | Secondary | Small sizes · limited colours (one-colour print, embroidery, engraving) · busy backgrounds | As a style preference when the gradient would work |
+| 3 | M letterform (Bracket M) | Restricted | Merch (tees, caps, stickers, totes) · in-app animation (loading, motion) · favicon | Marketing materials, or as a wordmark replacement |
+| 4 | Monogram (M in pill) | Restricted | Merch (pins, embroidery) · small scale (name cards) · watermarks | As the main logo or the app icon |
+
+**Decision checklist:** public-facing → Gradient · small/one-colour/busy → Flat · merch or in-app animation → M · name card/watermark/tiny → Monogram · unsure → Gradient or ask design.
+
 ## Rules
 
-- **Transition:** Wordmark everywhere for now. The favicon is the only monogram in active use.
 - **Background:** Light asset on light backgrounds, dark asset on dark. Dark brand surfaces use **#21005E** (headers, footers, in-app bar, email, merch, decks). The splash screen uses Secondary **#F3EAFF**.
 - **Gradients:** Never use a gradient that is not brand-provided. Only two are approved — the main-logo swoosh gradient (inside the gradient wordmark) and the social-avatar tile gradient (#ECEBFB → #F6E9F4).
 - **Framing:** Long banners must give the logo generous padding — never frame it close to the edges.
@@ -30,7 +42,7 @@ App-icon tiles: purple bg #3C3682 with #F3EAFF wordmark, or light bg #F6F6FC wit
 
 | Placement | Category | Light / Primary | Dark / Alt |
 |-----------|----------|-----------------|------------|
-| Favicon | App & Icons | Bracket M — Navy, Flat.svg (on white) | Bracket M — White, Flat.svg (on #21005E) |
+| Favicon | App & Icons | Bracket M — Navy, Flat.svg (on white) | Bracket M — White, Flat.svg (on #21005E) — M alone also approved for merch & in-app animation |
 | App icon — square | App & Icons | App Icon-3.svg (light) | App Icon.svg (purple) |
 | App icon — rounded | App & Icons | App Icon-5.svg (light) | App Icon-2.svg (purple) |
 | App icon — round | App & Icons | App Icon-4.svg (light) | App Icon-1.svg (purple) |
@@ -42,7 +54,10 @@ App-icon tiles: purple bg #3C3682 with #F3EAFF wordmark, or light bg #F6F6FC wit
 | Social avatar | Social | Round / Square on lilac→pink gradient, #21005E wordmark | — |
 | Social share / Open Graph | Social | Open_graph.png on #21005E | (same both) |
 | Social banner | Social | Opt 1 #21005E · Opt 2 #4000B8 · Opt 3 #F3EAFF | — |
-| Merch / physical | Merch | Wordmark_black.png on white | Wordmark_white.png on #21005E |
+| Merch / physical | Merch | Wordmark_black.png on white (M / monogram OK as accents) | Wordmark_white.png on #21005E |
+| Name cards & small print | Merch | Monogram Outline — Navy.svg on white | Monogram Outline — White.svg on #21005E |
+| In-app animation | Product | Bracket M — Navy, Flat.svg on white | Bracket M — White, Flat.svg on #21005E |
+| Watermark | Internal | Monogram Outline — Navy.svg on white | Monogram Outline — White.svg on #21005E |
 | Slide decks | Internal | Wordmark_purple.png on white | Wordmark_white.png on #21005E |
 
 ## How an agent should use this
